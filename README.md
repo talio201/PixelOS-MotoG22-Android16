@@ -83,21 +83,23 @@ Nesta pasta de lançamento, você encontrou os seguintes arquivos:
 ### Esqueça o Fastboot: Flasheando via BROM (MTK Client)
 Como o Fastboot da Motorola é severamente bloqueado neste aparelho, faremos toda a instalação de forma forçada pelo **Modo BROM** usando o MTK Client.
 
-**⚠️ MUITO IMPORTANTE SOBRE OS CAMINHOS DOS ARQUIVOS:**
-Para que o programa encontre os arquivos da ROM, você tem duas opções:
-* **Opção 1 (A mais fácil):** Copie todos os arquivos `.img` que você baixou (super, boot, vbmeta, etc.) e cole-os **dentro da pasta do seu MTK Client**.
-* **Opção 2 (Arraste e solte):** Em vez de digitar apenas `vbmeta.img`, você arrasta o arquivo para dentro do PowerShell para ele preencher o caminho completo sozinho.
+**⚠️ PASSO ESSENCIAL ANTES DE COMEÇAR:**
+Para evitar que os comandos fiquem gigantes e confusos, **COPIE TODOS** os arquivos `.img` que você baixou (super, boot, vbmeta, etc.) e **COLE DENTRO DA PASTA** do seu MTK Client (junto com o arquivo `mtk.py`).
 
-Com o **celular desligado**, abra o PowerShell na pasta do **MTK Client**. Para cada comando abaixo, digite no PowerShell, dê Enter, segure **Volume Mais (+) e Volume Menos (-)** e conecte o cabo USB. Quando terminar, desconecte o cabo e vá para o próximo comando:
+Com os arquivos já copiados para lá e o **celular desligado**, abra o PowerShell na pasta do **MTK Client**. Para cada comando abaixo, digite no PowerShell, dê Enter, segure **Volume Mais (+) e Volume Menos (-)** e conecte o cabo USB. Quando terminar, desconecte o cabo e vá para o próximo comando:
 
 ```powershell
-# 1. Flasheando os VBMETAs modificados em ambos os slots (A/B) para não dar Bootloop de segurança
-python mtk.py w vbmeta_a,vbmeta_b,vbmeta_system_a,vbmeta_system_b,vbmeta_vendor_a,vbmeta_vendor_b vbmeta.img,vbmeta.img,vbmeta_system.img,vbmeta_system.img,vbmeta_vendor.img,vbmeta_vendor.img
+# 1. Segurança (Flashear VBMETAs)
+python mtk.py w vbmeta_a,vbmeta_b vbmeta.img,vbmeta.img
+python mtk.py w vbmeta_system_a,vbmeta_system_b vbmeta_system.img,vbmeta_system.img
+python mtk.py w vbmeta_vendor_a,vbmeta_vendor_b vbmeta_vendor.img,vbmeta_vendor.img
 
-# 2. Flasheando o kernel vacinado (Root) e hardware nos slots A e B
-python mtk.py w boot_a,boot_b,dtbo_a,dtbo_b,vendor_boot_a,vendor_boot_b boot.img,boot.img,dtbo.img,dtbo.img,vendor_boot.img,vendor_boot.img
+# 2. Kernel e Hardware (Boot, DTBO, Vendor Boot)
+python mtk.py w boot_a,boot_b boot.img,boot.img
+python mtk.py w dtbo_a,dtbo_b dtbo.img,dtbo.img
+python mtk.py w vendor_boot_a,vendor_boot_b vendor_boot.img,vendor_boot.img
 
-# 3. Flasheando o sistema principal
+# 3. Sistema Principal
 python mtk.py w super super.img
 
 # 4. Apagando (Erase) os dados residuais e criptografia (Wipe Data)
