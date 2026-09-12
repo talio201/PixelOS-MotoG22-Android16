@@ -161,11 +161,12 @@ Não entre em pânico, é um aparelho MediaTek (MTK), quase tudo pode ser restau
 - Você pode usar o **MTK Client** para regravar as partições usando o seu backup, ou regravar a partição boot original.
 
 ### 3. Restauração Padrão de Fábrica Oficial (Ferramenta da Motorola)
-Se quiser voltar ao Android Original bloqueado e de fábrica, use o **Rescue and Smart Assistant (RSA)**.
+Se quiser voltar ao Android Original bloqueado e de fábrica, use o **Rescue and Smart Assistant (RSA)**. O Moto G22 é MediaTek, então a recuperação tem um detalhe muito importante para ser reconhecido:
 1. Abra o programa RSA no Windows.
-2. Vá em **Resgatar (Rescue)** > Clique em "Telefone" ou insira o modelo/IMEI do Moto G22.
-3. Baixe a Firmware oferecida pelo programa.
-4. Desligue o telefone, segure **Volume Menos** e coloque o cabo. Ele entrará no modo fastboot, e o programa fará o flash completo automaticamente.
+2. Vá em **Resgatar (Rescue)** > Clique em "Telefone" ou insira o modelo do Moto G22. Baixe a Firmware oferecida pelo programa e inicie o processo.
+3. O programa vai pedir: *Passo 1: Desligue o dispositivo* / *Passo 2: Conecte o dispositivo ao PC*. Se você estiver na tela do Fastboot, ele **NÃO vai avançar**.
+4. **O Segredo para reconhecer:** No modo Fastboot do celular, use os botões de volume para selecionar "Power Off" (Desligar) e aperte Power para confirmar. Desconecte o cabo.
+5. Com o aparelho **100% desligado e tela preta**, pressione e **segure a tecla de Volume Menos (-)** e, sem soltar, **conecte o cabo USB no PC**. O programa fará o reconhecimento na hora e iniciará o download/flash para o seu aparelho!
 
 ---
 **Desenvolvido para a Comunidade do YouTube! 🚀**
