@@ -169,6 +169,10 @@ Se quiser voltar ao Android Original bloqueado e de fábrica, use o **Rescue and
 4. **O Segredo para reconhecer:** No modo Fastboot do celular, use os botões de volume para selecionar "Power Off" (Desligar) e aperte Power para confirmar. Desconecte o cabo.
 5. Com o aparelho **100% desligado e tela preta**, pressione e **segure a tecla de Volume Menos (-)** e, sem soltar, **conecte o cabo USB no PC**. O programa fará o reconhecimento na hora e iniciará o download/flash para o seu aparelho!
 
+### 4. Erro ao rodar ADB: "O executável não é um aplicativo válido"
+Se você tentar rodar `.\adb.exe` e o PowerShell disser que não é um aplicativo válido, significa que o download do *Platform-Tools* falhou ou a extração do arquivo ZIP corrompeu o executável (ele fica com 0 bytes).
+- **A solução:** Apague a pasta do platform-tools, baixe o ZIP novamente no site oficial do Android e extraia tudo novamente com cuidado.
+
 ---
 **Desenvolvido para a Comunidade do YouTube! 🚀**
 Espero que curtam essa build fluida. Lembrem-se de nunca divulgar seus arquivos de `nvram` para a internet!
