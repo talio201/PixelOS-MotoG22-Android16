@@ -96,48 +96,31 @@ Nesta pasta de lançamento, você encontrou os seguintes arquivos:
 - `dtbo.img`
 - Arquivos `vbmeta.img`, `vbmeta_system.img`, `vbmeta_vendor.img`
 
-### Entrando no FastbootD
-O Moto G22 usa partições dinâmicas. O `super.img` deve ser instalado no modo `fastbootd`.
-
-1. Reinicie no bootloader:
-```powershell
-.\adb.exe reboot bootloader
-```
-2. Entre no FastbootD:
-```powershell
-.\fastboot.exe reboot fastboot
-```
-*A tela do celular mudará e indicará "fastbootd".*
-
-### Flasheando os Arquivos
+### Esqueça o Fastboot: Flasheando via BROM (MTK Client)
+Como o Fastboot da Motorola é severamente bloqueado neste aparelho, faremos toda a instalação de forma forçada pelo **Modo BROM** usando o MTK Client.
 
 **⚠️ MUITO IMPORTANTE SOBRE OS CAMINHOS DOS ARQUIVOS:**
-Para que o programa encontre os arquivos da ROM (como o `vbmeta.img`), eles precisam estar no lugar certo ou com o caminho correto. Você tem duas opções para evitar o erro de "arquivo não encontrado":
-* **Opção 1 (A mais fácil):** Copie todos os arquivos `.img` que você baixou (super, boot, vbmeta, etc.) e cole-os **dentro da pasta do seu Platform-Tools** (na mesma pasta onde está o arquivo `fastboot.exe`). Assim, você pode copiar e colar os comandos abaixo sem alterar nada.
-* **Opção 2 (Arraste e solte):** Se os arquivos `.img` estiverem em outra pasta, em vez de digitar apenas `vbmeta.img`, você deve colocar o caminho inteiro (exemplo: `"E:\PROJETO_YT\vbmeta.img"`). O jeito mais fácil de fazer isso é escrever a primeira parte do comando (`.\fastboot.exe flash vbmeta `) e então clicar e **arrastar o arquivo .img** para dentro da janela do PowerShell. Ele preencherá o caminho exato sozinho!
+Para que o programa encontre os arquivos da ROM, você tem duas opções:
+* **Opção 1 (A mais fácil):** Copie todos os arquivos `.img` que você baixou (super, boot, vbmeta, etc.) e cole-os **dentro da pasta do seu MTK Client**.
+* **Opção 2 (Arraste e solte):** Em vez de digitar apenas `vbmeta.img`, você arrasta o arquivo para dentro do PowerShell para ele preencher o caminho completo sozinho.
 
-Com o PowerShell aberto na pasta do seu **Platform-Tools**, execute os passos na ordem:
+Com o **celular desligado**, abra o PowerShell na pasta do **MTK Client**. Para cada comando abaixo, digite no PowerShell, dê Enter, segure **Volume Mais (+) e Volume Menos (-)** e conecte o cabo USB. Quando terminar, desconecte o cabo e vá para o próximo comando:
 
 ```powershell
-# Desativando a verificação de integridade (AVB) para não dar Bootloop
-# (Lembre-se da dica acima sobre os caminhos se der erro de "No such file")
-.\fastboot.exe --disable-verity --disable-verification flash vbmeta vbmeta.img
-.\fastboot.exe --disable-verity --disable-verification flash vbmeta_system vbmeta_system.img
-.\fastboot.exe --disable-verity --disable-verification flash vbmeta_vendor vbmeta_vendor.img
+# 1. Flasheando os VBMETAs modificados para não dar Bootloop de segurança
+python mtk.py w vbmeta,vbmeta_system,vbmeta_vendor vbmeta.img,vbmeta_system.img,vbmeta_vendor.img
 
-# Flasheando o kernel vacinado (Root) e o hardware respectivo
-.\fastboot.exe flash boot boot.img
-.\fastboot.exe flash dtbo dtbo.img
-.\fastboot.exe flash vendor_boot vendor_boot.img
+# 2. Flasheando o kernel vacinado (Root) e o hardware respectivo
+python mtk.py w boot,dtbo,vendor_boot boot.img,dtbo.img,vendor_boot.img
 
-# Flasheando o sistema principal
-.\fastboot.exe flash super super.img
+# 3. Flasheando o sistema principal
+python mtk.py w super super.img
 
-# Formatando dados para remover criptografia residual (Wipe Data)
-.\fastboot.exe -w
+# 4. Apagando (Erase) os dados residuais e criptografia (Wipe Data)
+python mtk.py e userdata,metadata
 
-# Reiniciando o aparelho
-.\fastboot.exe reboot
+# 5. Reiniciando o aparelho
+python mtk.py reset
 ```
 
 O primeiro boot pode demorar de 5 a 10 minutos. Tenha paciência. Ao iniciar, você terá o Android 16 PIXELOS e o aplicativo do Magisk já indicará que o Root está ativo!
