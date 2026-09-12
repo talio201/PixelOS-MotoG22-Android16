@@ -58,32 +58,16 @@ python mtk.py rl Backup_Completo --skip userdata
 
 ---
 
-## Passo 3: Desbloqueando o Bootloader
+## Passo 3: Desbloqueando o Bootloader (Via MTK Client / BROM)
 
-Existem duas formas de desbloquear o bootloader do Moto G22. O bootloader deste modelo muitas vezes bloqueia comandos padrão, então recomendamos o método via BROM. Escolha a sua preferida (lembrando que **ambas apagarão seus dados**):
+O bootloader do Moto G22 é severamente bloqueado pela Motorola e não aceita os comandos tradicionais. Sendo assim, o método definitivo é forçar o desbloqueio ignorando a segurança da Motorola (lembrando que isso **apagará todos os seus dados**):
 
-### Método 1: Via BROM com MTK Client (Forçado / Recomendado)
-Este método ignora a segurança da Motorola e altera a partição diretamente.
 1. Com o celular desconectado e desligado, prepare o comando no PowerShell da pasta do **MTK Client**:
 ```powershell
 python mtk.py da seccfg unlock
 ```
 2. Segure os botões **Volume Mais (+) e Volume Menos (-)** e conecte o cabo USB. O programa fará o desbloqueio instantaneamente.
-3. **⚠️ ATENÇÃO - Correção do dm-verity:** Como o desbloqueio foi forçado, o Android de fábrica acusará corrupção. Assim que o MTK Client der sucesso, desconecte o cabo, segure **Volume Menos (-)** para forçar a inicialização na tela do Fastboot e **siga imediatamente para o Passo 4** (onde os comandos do vbmeta irão cegar o verificador e resolver o problema).
-
-### Método 2: Método Oficial da Motorola (Pelo Site)
-Caso prefira fazer pelo método oficial, recebendo a chave da fabricante:
-1. No modo Fastboot (ligue o celular segurando Volume Menos), abra o PowerShell na pasta do Platform-Tools e digite:
-```powershell
-.\fastboot.exe oem get_unlock_data
-```
-2. Copie o código gerado, junte todas as linhas em uma só (removendo os espaços) e acesse o [Site de Desbloqueio da Motorola](https://motorola-global-portal-pt.custhelp.com/app/standalone/bootloader/unlock-your-device-a).
-3. Insira o código no site e solicite a chave de desbloqueio. Você receberá uma chave exclusiva de 20 caracteres no seu e-mail.
-4. Volte ao Fastboot e digite o comando usando a chave que você recebeu:
-```powershell
-.\fastboot.exe oem unlock SUA_CHAVE_AQUI
-```
-5. Confirme na tela do celular usando os botões de volume e o botão Power.
+3. **⚠️ ATENÇÃO - Correção do dm-verity:** Como o desbloqueio foi forçado, o Android de fábrica acusará corrupção. Assim que o MTK Client der sucesso, desconecte o cabo, **mantenha o celular desligado** e **siga imediatamente para o Passo 4**, onde iremos flashear os arquivos necessários para contornar esse aviso.
 
 ---
 
@@ -130,11 +114,11 @@ O primeiro boot pode demorar de 5 a 10 minutos. Tenha paciência. Ao iniciar, vo
 ## 🛑 Troubleshooting e Recuperação de Desastres
 
 ### 1. Estou preso no Bootloop (O sistema não inicia, só reinicia na logo)
-Isso geralmente ocorre se o `Wipe Data` falhou ou o `vbmeta` não foi desativado corretamente.
-- No Fastboot normal (não no Fastbootd), execute:
+Isso geralmente ocorre se o Wipe Data falhou ou os arquivos `vbmeta` não foram gravados corretamente.
+- Com o celular desligado, repita os comandos de vbmeta e limpeza de dados no **MTK Client**:
 ```powershell
-.\fastboot.exe -w
-.\fastboot.exe --disable-verity --disable-verification flash vbmeta vbmeta.img
+python mtk.py w vbmeta,vbmeta_system,vbmeta_vendor vbmeta.img,vbmeta_system.img,vbmeta_vendor.img
+python mtk.py e userdata,metadata
 ```
 
 ### 2. Destruí o sistema e não entra nem no Fastboot (Hard Brick / BROM Mode Loop)
