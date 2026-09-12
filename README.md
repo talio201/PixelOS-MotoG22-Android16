@@ -91,11 +91,11 @@ Para que o programa encontre os arquivos da ROM, você tem duas opções:
 Com o **celular desligado**, abra o PowerShell na pasta do **MTK Client**. Para cada comando abaixo, digite no PowerShell, dê Enter, segure **Volume Mais (+) e Volume Menos (-)** e conecte o cabo USB. Quando terminar, desconecte o cabo e vá para o próximo comando:
 
 ```powershell
-# 1. Flasheando os VBMETAs modificados para não dar Bootloop de segurança
-python mtk.py w vbmeta,vbmeta_system,vbmeta_vendor vbmeta.img,vbmeta_system.img,vbmeta_vendor.img
+# 1. Flasheando os VBMETAs modificados em ambos os slots (A/B) para não dar Bootloop de segurança
+python mtk.py w vbmeta_a,vbmeta_b,vbmeta_system_a,vbmeta_system_b,vbmeta_vendor_a,vbmeta_vendor_b vbmeta.img,vbmeta.img,vbmeta_system.img,vbmeta_system.img,vbmeta_vendor.img,vbmeta_vendor.img
 
-# 2. Flasheando o kernel vacinado (Root) e o hardware respectivo
-python mtk.py w boot,dtbo,vendor_boot boot.img,dtbo.img,vendor_boot.img
+# 2. Flasheando o kernel vacinado (Root) e hardware nos slots A e B
+python mtk.py w boot_a,boot_b,dtbo_a,dtbo_b,vendor_boot_a,vendor_boot_b boot.img,boot.img,dtbo.img,dtbo.img,vendor_boot.img,vendor_boot.img
 
 # 3. Flasheando o sistema principal
 python mtk.py w super super.img
@@ -117,7 +117,7 @@ O primeiro boot pode demorar de 5 a 10 minutos. Tenha paciência. Ao iniciar, vo
 Isso geralmente ocorre se o Wipe Data falhou ou os arquivos `vbmeta` não foram gravados corretamente.
 - Com o celular desligado, repita os comandos de vbmeta e limpeza de dados no **MTK Client**:
 ```powershell
-python mtk.py w vbmeta,vbmeta_system,vbmeta_vendor vbmeta.img,vbmeta_system.img,vbmeta_vendor.img
+python mtk.py w vbmeta_a,vbmeta_b,vbmeta_system_a,vbmeta_system_b,vbmeta_vendor_a,vbmeta_vendor_b vbmeta.img,vbmeta.img,vbmeta_system.img,vbmeta_system.img,vbmeta_vendor.img,vbmeta_vendor.img
 python mtk.py e userdata,metadata
 ```
 
