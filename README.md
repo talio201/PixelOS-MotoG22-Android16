@@ -6,6 +6,13 @@ Bem-vindo ao projeto de instalação da Custom ROM **Android 16 PIXELOS (GSI)** 
 
 ---
 
+## 📥 Download dos Arquivos da ROM (Google Drive)
+Os arquivos de instalação (`super.img`, `boot.img`, `vbmeta`, etc.) são muito grandes para o GitHub. Baixe todos eles diretamente na nuvem clicando no botão abaixo:
+
+[**➔ BAIXAR ARQUIVOS DA ROM NO GOOGLE DRIVE**](https://drive.google.com/drive/folders/1qEm0Zwo9CYq6NgC-KsH146OJLhwb6fxn?usp=drive_link)
+
+---
+
 ## 🛠️ Requisitos e Programas Necessários
 
 Antes de começar, você precisa ter instalados no seu computador (Windows):
