@@ -60,30 +60,20 @@ python mtk.py rl Backup_Completo --skip userdata
 
 ## Passo 3: Desbloqueando o Bootloader
 
-Existem três formas de desbloquear o bootloader do Moto G22. Escolha a que preferir (lembrando que **todas apagarão seus dados**):
+Existem duas formas de desbloquear o bootloader do Moto G22. O bootloader deste modelo muitas vezes bloqueia comandos padrão, então recomendamos o método via BROM. Escolha a sua preferida (lembrando que **ambas apagarão seus dados**):
 
-### Método 1: Direto pelo Fastboot (Mais Rápido)
-1. Com o celular ligado normalmente e conectado via cabo, abra o PowerShell na pasta do **Platform-Tools**:
-```powershell
-.\adb.exe reboot bootloader
-```
-2. No modo Fastboot, digite:
-```powershell
-.\fastboot.exe flashing unlock
-```
-3. Na tela do celular, use os botões de volume para selecionar "Unlock the bootloader" e o botão Power para confirmar.
-
-### Método 2: Via BROM com MTK Client (Forçado / Sem código da Motorola)
-Se o método acima falhar ou estiver bloqueado, o MTK Client pode forçar o desbloqueio alterando a partição de segurança.
+### Método 1: Via BROM com MTK Client (Forçado / Recomendado)
+Este método ignora a segurança da Motorola e altera a partição diretamente.
 1. Com o celular desconectado e desligado, prepare o comando no PowerShell da pasta do **MTK Client**:
 ```powershell
 python mtk.py da seccfg unlock
 ```
 2. Segure os botões **Volume Mais (+) e Volume Menos (-)** e conecte o cabo USB. O programa fará o desbloqueio instantaneamente.
+3. **⚠️ ATENÇÃO - Correção do dm-verity:** Como o desbloqueio foi forçado, o Android de fábrica acusará corrupção. Assim que o MTK Client der sucesso, desconecte o cabo, segure **Volume Menos (-)** para forçar a inicialização na tela do Fastboot e **siga imediatamente para o Passo 4** (onde os comandos do vbmeta irão cegar o verificador e resolver o problema).
 
-### Método 3: Método Oficial da Motorola (Pelo Site)
+### Método 2: Método Oficial da Motorola (Pelo Site)
 Caso prefira fazer pelo método oficial, recebendo a chave da fabricante:
-1. No modo Fastboot, digite:
+1. No modo Fastboot (ligue o celular segurando Volume Menos), abra o PowerShell na pasta do Platform-Tools e digite:
 ```powershell
 .\fastboot.exe oem get_unlock_data
 ```
