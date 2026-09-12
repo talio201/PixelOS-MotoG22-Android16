@@ -48,7 +48,8 @@ Antes de começar, você precisa ter instalados no seu computador (Windows):
 # Este comando faz um Backup Completo de TODAS as partições do celular
 # e as salva dentro de uma pasta chamada "Backup_Completo".
 # Isso salvará seu IMEI, NVRAM, partições de boot e o sistema atual inteiro!
-python mtk rl Backup_Completo
+# Ignorando a partição userdata para poupar tempo e espaço.
+python mtk.py rl Backup_Completo --skip userdata
 ```
 
 4. Agora, pegue o celular desligado, segure os botões **Volume Mais (+) e Volume Menos (-)** juntos e **conecte o cabo USB no computador**. O programa vai detectar o celular em Modo BROM e iniciar a extração automaticamente!
@@ -76,7 +77,7 @@ Existem três formas de desbloquear o bootloader do Moto G22. Escolha a que pref
 Se o método acima falhar ou estiver bloqueado, o MTK Client pode forçar o desbloqueio alterando a partição de segurança.
 1. Com o celular desconectado e desligado, prepare o comando no PowerShell da pasta do **MTK Client**:
 ```powershell
-python mtk da seccfg unlock
+python mtk.py da seccfg unlock
 ```
 2. Segure os botões **Volume Mais (+) e Volume Menos (-)** e conecte o cabo USB. O programa fará o desbloqueio instantaneamente.
 
