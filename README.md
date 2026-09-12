@@ -110,10 +110,17 @@ O Moto G22 usa partições dinâmicas. O `super.img` deve ser instalado no modo 
 *A tela do celular mudará e indicará "fastbootd".*
 
 ### Flasheando os Arquivos
-No PowerShell, dentro da pasta onde estão os arquivos baixados, execute:
+
+**⚠️ MUITO IMPORTANTE SOBRE OS CAMINHOS DOS ARQUIVOS:**
+Para que o programa encontre os arquivos da ROM (como o `vbmeta.img`), eles precisam estar no lugar certo ou com o caminho correto. Você tem duas opções para evitar o erro de "arquivo não encontrado":
+* **Opção 1 (A mais fácil):** Copie todos os arquivos `.img` que você baixou (super, boot, vbmeta, etc.) e cole-os **dentro da pasta do seu Platform-Tools** (na mesma pasta onde está o arquivo `fastboot.exe`). Assim, você pode copiar e colar os comandos abaixo sem alterar nada.
+* **Opção 2 (Arraste e solte):** Se os arquivos `.img` estiverem em outra pasta, em vez de digitar apenas `vbmeta.img`, você deve colocar o caminho inteiro (exemplo: `"E:\PROJETO_YT\vbmeta.img"`). O jeito mais fácil de fazer isso é escrever a primeira parte do comando (`.\fastboot.exe flash vbmeta `) e então clicar e **arrastar o arquivo .img** para dentro da janela do PowerShell. Ele preencherá o caminho exato sozinho!
+
+Com o PowerShell aberto na pasta do seu **Platform-Tools**, execute os passos na ordem:
 
 ```powershell
 # Desativando a verificação de integridade (AVB) para não dar Bootloop
+# (Lembre-se da dica acima sobre os caminhos se der erro de "No such file")
 .\fastboot.exe --disable-verity --disable-verification flash vbmeta vbmeta.img
 .\fastboot.exe --disable-verity --disable-verification flash vbmeta_system vbmeta_system.img
 .\fastboot.exe --disable-verity --disable-verification flash vbmeta_vendor vbmeta_vendor.img
