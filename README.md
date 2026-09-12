@@ -25,6 +25,20 @@ Antes de começar, você precisa ter instalados no seu computador (Windows):
 
 ---
 
+## 🚨 AVISO CRÍTICO SOBRE O MOTO G22 E O MODO BROM
+O bootloader do Moto G22 é severamente bloqueado pela Motorola. Os comandos padrão via Fastboot (como `flashing unlock`) **NÃO FUNCIONAM** neste modelo.
+Para que a instalação dê certo, você **DEVE** fazer todo o processo usando o **Modo BROM (MTK Client)**.
+
+**Por que a ordem dos passos é fundamental?**
+1. **Backup:** Essencial para salvar seu IMEI antes de quebrar as partições.
+2. **Desbloqueio Forçado:** O MTK Client "arromba" a segurança alterando a partição `seccfg`.
+3. **Desarme do DM-Verify (Verificador):** Ao forçar o desbloqueio, o Android detecta a violação e tenta travar o celular num loop de *dm-verity corruption*. Seguir o passo de gravar os arquivos `.img` (Vbmeta, Boot, etc.) na mesma sequência descrita aqui é a **única forma** de "cegar" o verificador do Android e garantir que o sistema inicie. Siga exatamente como funcionou nos testes!
+
+**⚠️ REGRA DE OURO PARA OS ARQUIVOS DA ROM:**
+Para os comandos curtos funcionarem e você não ter erros de caminhos, **VOCÊ DEVE COPIAR TODOS OS ARQUIVOS `.img` QUE BAIXOU DO DRIVE E COLAR DIRETAMENTE DENTRO DA PASTA DO SEU MTK CLIENT** (na mesma pasta onde fica o arquivo `mtk.py`). Deixe tudo misturado numa pasta só!
+
+---
+
 ## Passo 1: Preparando o Aparelho (Depuração USB e OEM Unlock)
 
 1. Vá em **Configurações > Sobre o telefone**.
