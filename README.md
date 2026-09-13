@@ -25,17 +25,16 @@ Antes de começar, você precisa ter instalados no seu computador (Windows):
 
 ---
 
-## 🚨 AVISO CRÍTICO SOBRE O MOTO G22 E O MODO BROM
-O bootloader do Moto G22 é severamente bloqueado pela Motorola. Os comandos padrão via Fastboot (como `flashing unlock`) **NÃO FUNCIONAM** neste modelo.
-Para que a instalação dê certo, você **DEVE** fazer todo o processo usando o **Modo BROM (MTK Client)**.
+## 🚨 AVISO CRÍTICO SOBRE O MODO BROM E OS ARQUIVOS
+Neste tutorial, usaremos **apenas o Método BROM (MTK Client)**, pois ele é a forma mais direta e garantida para o Moto G22. É importante que você saiba como entrar nos modos Fastboot e FastbootD (para casos de recuperação), mas não abordaremos isso individualmente e o nosso procedimento não precisará acessar esses modos em nenhum momento.
 
 **Por que a ordem dos passos é fundamental?**
-1. **Backup:** Essencial para salvar seu IMEI antes de quebrar as partições.
-2. **Desbloqueio Forçado:** O MTK Client "arromba" a segurança alterando a partição `seccfg`.
-3. **Desarme do DM-Verify (Verificador):** Ao forçar o desbloqueio, o Android detecta a violação e tenta travar o celular num loop de *dm-verity corruption*. Seguir o passo de gravar os arquivos `.img` (Vbmeta, Boot, etc.) na mesma sequência descrita aqui é a **única forma** de "cegar" o verificador do Android e garantir que o sistema inicie. Siga exatamente como funcionou nos testes!
+1. **Backup:** Essencial para salvar seu IMEI antes de alterar as partições.
+2. **Desbloqueio Forçado:** O MTK Client altera a segurança através da partição `seccfg`.
+3. **Desarme do DM-Verify (Verificador):** Ao desbloquear via BROM, o Android detecta a alteração e tenta travar o celular num loop de *dm-verity corruption*. Fazer a instalação dos arquivos `.img` (Vbmeta, Boot, etc.) na exata sequência descrita aqui é a **única forma** de desativar esse verificador e garantir que o sistema inicie. Siga o passo a passo exatamente da forma que foi testada e aprovada!
 
 **⚠️ REGRA DE OURO PARA OS ARQUIVOS DA ROM:**
-Para os comandos curtos funcionarem e você não ter erros de caminhos, **VOCÊ DEVE COPIAR TODOS OS ARQUIVOS `.img` QUE BAIXOU DO DRIVE E COLAR DIRETAMENTE DENTRO DA PASTA DO SEU MTK CLIENT** (na mesma pasta onde fica o arquivo `mtk.py`). Deixe tudo misturado numa pasta só!
+Todos os arquivos que você baixar junto com o `super.img` **DEVEM estar na mesma pasta** do MTK Client (junto ao arquivo `mtk.py`). Isso é crucial para que os comandos consigam rodar sem problemas. Se não estiverem juntos, você terá que adaptar a rota dos arquivos nos comandos manualmente — e se não fizer isso exatamente da forma correta, o processo não vai funcionar de jeito nenhum.
 
 ---
 
@@ -94,11 +93,11 @@ Nesta pasta de lançamento, você encontrou os seguintes arquivos:
 - `dtbo.img`
 - Arquivos `vbmeta.img`, `vbmeta_system.img`, `vbmeta_vendor.img`
 
-### Esqueça o Fastboot: Flasheando via BROM (MTK Client)
-Como o Fastboot da Motorola é severamente bloqueado neste aparelho, faremos toda a instalação de forma forçada pelo **Modo BROM** usando o MTK Client.
+### Flasheando via BROM (MTK Client)
+Faremos toda a instalação de forma direta pelo **Modo BROM** usando o MTK Client.
 
-**⚠️ PASSO ESSENCIAL ANTES DE COMEÇAR:**
-Para evitar que os comandos fiquem gigantes e confusos, **COPIE TODOS** os arquivos `.img` que você baixou (super, boot, vbmeta, etc.) e **COLE DENTRO DA PASTA** do seu MTK Client (junto com o arquivo `mtk.py`).
+**⚠️ ÚLTIMO LEMBRETE:**
+Conforme avisado no início, garanta que **TODOS** os arquivos `.img` que você baixou (super, boot, vbmeta, etc.) já estão **COPIADOS E COLADOS DENTRO DA PASTA** do seu MTK Client (junto com o arquivo `mtk.py`). Se você não fez isso, os comandos abaixo darão erro!
 
 Com os arquivos já copiados para lá e o **celular desligado**, abra o PowerShell na pasta do **MTK Client**. Para cada comando abaixo, digite no PowerShell, dê Enter, segure **Volume Mais (+) e Volume Menos (-)** e conecte o cabo USB. Quando terminar, desconecte o cabo e vá para o próximo comando:
 
